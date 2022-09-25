@@ -1,0 +1,3 @@
+lab-*/.terraform
+lab-*/.terraform.*
+lab-*/terraform*
