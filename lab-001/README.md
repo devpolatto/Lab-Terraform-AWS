@@ -3,7 +3,7 @@
 </center>
 
 <p align="center">
-  <img alt="lab-001-preview" src="../.github/draw-lab-001.svg"/>
+  <img alt="lab-001-preview" src="../.github/draw-lab-001.png"/>
 </p>
 
 <p>Develop an infrastructure with the following features:</p>
