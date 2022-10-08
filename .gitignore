@@ -1,3 +1,7 @@
 lab-*/.terraform
 lab-*/.terraform.*
 lab-*/terraform*
+
+lab-*/*.pem
+
+lab-*/lab-desc.txt
