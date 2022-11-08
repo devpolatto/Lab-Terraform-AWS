@@ -31,8 +31,8 @@ resource "aws_route_table_association" "this" {
 
 resource "aws_network_interface" "this" {
 
-  subnet_id       = 
-  private_ips     = 
+  subnet_id       = # public subnet id
+  private_ips     = # List of ips of the variable "hosts_inventory"
   security_groups = [aws_security_group.lab-003.id]
 
   tags              = merge(var.common_tags, { Name = each.value[1] })
