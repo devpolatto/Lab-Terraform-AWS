@@ -3,13 +3,25 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "host_ip" {
-  type = "map"
-  default = {
-    "account1" = "devops1"
-    "account2" = "devops2"
-    "account3" = "devops3"
-  }
+variable "hosts_inventory" {
+  type = list
+  default = [
+    {
+      id = "host_1"
+      hostname = "Elastic Server"
+      ip = "192.168.20.10"
+    },
+    {
+      id = "host_1"
+      hostname = "Elastic Server"
+      ip = "192.168.20.20"
+    },
+    {
+      id = "host_1"
+      hostname = "Elastic Server"
+      ip = "192.168.20.30"
+    }
+  ]
 }
 
 variable "common_tags" {

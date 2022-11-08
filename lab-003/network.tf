@@ -30,13 +30,9 @@ resource "aws_route_table_association" "this" {
 }
 
 resource "aws_network_interface" "this" {
-  for_each = {
-    "nint-1" = ["192.168.20.10", "Elastic Server"]
-    "nint-2" = ["192.168.20.20", "Host"]
-    "nint-3" = ["192.168.20.30", "Host"]
-  }
-  subnet_id       = aws_subnet.this.id[each.key[0]]
-  private_ips     = each.value[0]
+
+  subnet_id       = 
+  private_ips     = 
   security_groups = [aws_security_group.lab-003.id]
 
   tags              = merge(var.common_tags, { Name = each.value[1] })
