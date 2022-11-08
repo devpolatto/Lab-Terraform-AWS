@@ -1,7 +1,14 @@
 lab-*/.terraform
 lab-*/.terraform.*
 lab-*/terraform*
+lab-*/locals.tf
+lab-*/var.tfvars
+lab-*/note.txt
 
 lab-*/*.pem
 
 lab-*/lab-desc.txt
+
+lab-002/variables.tfvars
+
+
