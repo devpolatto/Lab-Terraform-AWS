@@ -1,39 +1,39 @@
-resource "aws_subnet" "this" {
-  for_each = {
-    "pub" = ["192.168.20.0/24", "${var.aws_region}a", "snet-pub-002"]
-    "priv" = ["192.168.30.0/24", "${var.aws_region}b", "snet-priv-002"]
-  }
+resource "aws_subnet" "subnet-public" {
   vpc_id            = local.vpc_id
-  cidr_block        = each.value[0]
-  availability_zone = each.value[1]
-  tags              = merge(var.common_tags, { Name = each.value[2] })
+  cidr_block        = "192.168.20.0/24"
+  availability_zone = "${local.region}a"
+  tags              = merge(var.common_tags, { Name = "snet-pub-002" })
 }
 
 resource "aws_route_table" "public" {
-  vpc_id            = local.vpc_id
+  vpc_id = local.vpc_id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = local.igw_id
   }
-  tags              = merge(var.common_tags, { Name = "rt-public" })
-}
-
-resource "aws_route_table" "private" {
-  vpc_id            = local.vpc_id
-  tags              = merge(var.common_tags, { Name = "rt-private" })
+  tags = merge(var.common_tags, { Name = "rt-public" })
 }
 
 resource "aws_route_table_association" "this" {
-  for_each = {for k, v in aws_subnet.this : v.tags.Name => v.id}
-  subnet_id = each.value
-  route_table_id = substr(each.key, 5, 3) == "pub" ? aws_route_table.public.id : aws_route_table.private.id
+  subnet_id      = aws_subnet.subnet-public.id
+  route_table_id = aws_route_table.public.id
 }
 
-resource "aws_network_interface" "this" {
-
-  subnet_id       = # public subnet id
-  private_ips     = # List of ips of the variable "hosts_inventory"
+resource "aws_network_interface" "worker" {
+  subnet_id       = aws_subnet.subnet-public.id
+  private_ips     = ["192.168.20.10"]
   security_groups = [aws_security_group.lab-003.id]
+  tags            = merge(var.common_tags, { Name = "Master" })
+}
 
-  tags              = merge(var.common_tags, { Name = each.value[1] })
+resource "aws_network_interface" "node" {
+  for_each = {
+    "Host1" = "node-k8s-1",
+    "Host2" = "node-k8s-2",
+    "Host3" = "node-k8s-3"
+  }
+  subnet_id         = aws_subnet.subnet-public.id
+  ipv4_prefix_count = 2
+  security_groups   = [aws_security_group.lab-003.id]
+  tags              = merge(var.common_tags, { Name = "${each.value}" })
 }
