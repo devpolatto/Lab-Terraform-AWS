@@ -1,3 +1,4 @@
 #!/bin/bash
+sudo apt update
 curl -fsSL https://get.docker.com -o get-docker.sh
-usermod -aG docker ubuntu
+sudo usermod -aG docker $USER
