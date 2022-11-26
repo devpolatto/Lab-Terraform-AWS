@@ -5,7 +5,9 @@ resource "aws_instance" "master" {
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.subnet-public.id
 
-  security_groups = [aws_security_group.lab-003.id]
+  security_groups = [aws_security_group.private.id, aws_security_group.public.id]
+
+  key_name = aws_key_pair.key_pair.id
 
   root_block_device {
     volume_size = 30
@@ -25,7 +27,9 @@ resource "aws_instance" "node" {
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.subnet-public.id
 
-  security_groups = [aws_security_group.lab-003.id]
+  security_groups = [aws_security_group.private.id, aws_security_group.public.id]
+
+  key_name = aws_key_pair.key_pair.id
 
   root_block_device {
     volume_size = 30

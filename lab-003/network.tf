@@ -22,7 +22,7 @@ resource "aws_route_table_association" "this" {
 resource "aws_network_interface" "worker" {
   subnet_id       = aws_subnet.subnet-public.id
   private_ips     = ["192.168.20.10"]
-  security_groups = [aws_security_group.lab-003.id]
+  security_groups = [aws_security_group.private.id, aws_security_group.public.id]
   tags            = merge(var.common_tags, { Name = "Master" })
 }
 
@@ -34,6 +34,6 @@ resource "aws_network_interface" "node" {
   }
   subnet_id         = aws_subnet.subnet-public.id
   ipv4_prefix_count = 2
-  security_groups   = [aws_security_group.lab-003.id]
+  security_groups = [aws_security_group.private.id, aws_security_group.public.id]
   tags              = merge(var.common_tags, { Name = "${each.value}" })
 }
