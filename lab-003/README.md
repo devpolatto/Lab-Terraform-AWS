@@ -7,3 +7,25 @@
 </p>
 
 
+#### Locals.tf
+```
+locals {
+  region = "" // aws region
+}
+
+locals {
+  profile = "" // Profile set on .aws/credentials 
+}
+
+locals {
+  vpc_id = "" // VPC ID
+  igw_id = "" // Internet Gateway
+}
+
+locals {
+  ec2 = {
+    ami_id        = ""
+    instance_type = ""
+  }
+}
+```
